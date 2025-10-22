@@ -3,7 +3,6 @@ import './App.css'
 import { Home } from './pages/Home'
 import { Header } from './components/Header/Header'
 export const App = () => {
-  const [count, setCount] = useState(0)
 
   return (
     <>
