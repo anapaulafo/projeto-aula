@@ -1,10 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
 .header {
   background-color: #7a56c3;
   padding: 10px;
   text-align: center;
+  position: sticky
 }
 
 .header-title {
   font-size: 24px;
   font-weight: bold;
+  font-family: 'Outfit', sans-serif;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+  margin: 20px
+}
+
+.link-hover {
+  text-decoration: underline;
 }
