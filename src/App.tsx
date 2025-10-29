@@ -1,14 +1,19 @@
-import { useState } from 'react'
-import './App.css'
-import { Home } from './pages/Home'
-import { Header } from './components/Header/Header'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./App.css";
+import { Home } from "./pages/Home";
+import { Dashboard } from "./pages/Dashboard";
+import { Header } from "./components/Header/Header";
+
 export const App = () => {
-
   return (
-    <>
-    <Header />
-    <Home />
-    </>
-  )
-}
-
+    <Router>
+      <Header />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </main>
+    </Router>
+  );
+};
