@@ -1,9 +1,15 @@
-import './Header.css'
+import { Link } from "react-router-dom";
+import "./Header.css";
+
 export const Header = () => {
   return (
-    <div className="header">
-      <h1 className="header-title">Header da página</h1>
-    </div>
-  )
-}
+    <header className="header">
+      <h1 className="header-title">💫 Oscars Death Race 💫</h1>
+      <nav>
+        <Link className="link" to="/">Home</Link>
+        <Link className="link" to="/dashboard">Dashboard</Link>
+      </nav>
+    </header>
+  );
+};
 
