@@ -50,18 +50,46 @@ router.post("/login", async (req, res) => {
     return res.status(400).json({ error: "Preencha usuário e senha." });
   }
 
-  const { data, error } = await supabase
-    .from("oscars2025")
-    .select("*")
-    .eq("usuario", usuario)
-    .eq("senha", senha)
-    .single();
+  try {
+    // debug: log the received credentials
+    console.log('[DEBUG] /login received body:', { usuario, senha });
 
-  if (error || !data) {
-    return res.status(401).json({ error: "Usuário ou senha incorretos." });
+    // fetch by usuario only, then compare senha server-side to help debug
+    const { data, error } = await supabase
+      .from("oscars2025")
+      .select("*")
+      .eq("usuario", usuario)
+      .maybeSingle(); // evita erro se não encontrar
+
+    // debug: log supabase response
+    console.log('[DEBUG] supabase select returned:', { data, error });
+
+    if (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Erro ao buscar usuário." });
+    }
+
+    if (!data) {
+      return res.status(401).json({ error: "Usuário ou senha incorretos." });
+    }
+
+    // compare password server-side (plain text comparison for now)
+    if (data.senha !== senha) {
+      console.log('[DEBUG] senha mismatch: sent="%s" stored="%s"', senha, data.senha);
+      return res.status(401).json({ error: "Usuário ou senha incorretos." });
+    }
+
+    res.json({
+      message: "Login realizado com sucesso!",
+      user: {
+        id: data.id,
+        usuario: data.usuario,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erro no servidor." });
   }
-
-  res.json({ message: "Login realizado com sucesso!", user: data });
 });
 
 export default router;
