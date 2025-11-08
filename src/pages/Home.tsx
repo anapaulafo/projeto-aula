@@ -3,7 +3,7 @@ import MovieCard from "../components/MovieCard/MovieCard";
 import "../components/MovieCard/MovieCard.css";
 import "../styles/Home.css";
 
-const API_KEY = "76110a6805aca8e1a4dbcd4ba00066a9";
+const API_KEY = "INSERT API KEY HERE";
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
 
