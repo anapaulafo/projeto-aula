@@ -51,45 +51,31 @@ router.post("/login", async (req, res) => {
   }
 
   try {
-    // debug: log the received credentials
-    console.log('[DEBUG] /login received body:', { usuario, senha });
-
-    // fetch by usuario only, then compare senha server-side to help debug
+    // Busca apenas pelo usuário
     const { data, error } = await supabase
       .from("oscars2025")
       .select("*")
-      .eq("usuario", usuario)
-      .maybeSingle(); // evita erro se não encontrar
+      .eq("usuario", usuario.trim())
+      .single();
 
-    // debug: log supabase response
-    console.log('[DEBUG] supabase select returned:', { data, error });
-
-    if (error) {
-      console.error(error);
-      return res.status(500).json({ error: "Erro ao buscar usuário." });
-    }
-
-    if (!data) {
+    if (error || !data) {
       return res.status(401).json({ error: "Usuário ou senha incorretos." });
     }
 
-    // compare password server-side (plain text comparison for now)
-    if (data.senha !== senha) {
-      console.log('[DEBUG] senha mismatch: sent="%s" stored="%s"', senha, data.senha);
+    // Compara a senha manualmente
+    if (data.senha !== senha.trim()) {
       return res.status(401).json({ error: "Usuário ou senha incorretos." });
     }
 
-    res.json({
-      message: "Login realizado com sucesso!",
-      user: {
-        id: data.id,
-        usuario: data.usuario,
-      },
-    });
+    res.json({ message: "Login realizado com sucesso!", usuario: data.usuario });
+
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Erro no servidor." });
+    res.status(500).json({ error: "Erro ao buscar usuário." });
   }
 });
+
+
+
 
 export default router;
