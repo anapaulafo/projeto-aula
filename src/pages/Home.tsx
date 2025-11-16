@@ -5,7 +5,6 @@ import "../styles/Home.css";
 import { apiRequest } from "../services/api";
 
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
-
 interface Movie {
   id: number;
   title: string;
