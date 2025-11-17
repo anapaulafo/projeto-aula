@@ -5,22 +5,25 @@
   margin: 16px;
   width: min(620px, 90%);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-  display: flex;
-  flex-direction: row;
-  gap: 32px;
+  display: grid;
+  grid-template-columns: minmax(180px, 1.5fr) 2fr minmax(140px, 1fr);
+  gap: 24px;
   align-items: flex-start;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .category-card h2 {
   width: 100%;
-  text-align: center;
-  font-size: clamp(1.4rem, 2vw + 0.5rem, 2rem);
+  text-align: left;
+  font-size: clamp(1.1rem, 1.2vw + 0.55rem, 1.45rem);
   font-weight: 700;
   color: #222;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
   border-bottom: 2px solid #eee;
   padding-bottom: 6px;
+  line-height: 1.2;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 .movie-list {
@@ -55,6 +58,7 @@
   flex-direction: column;
   align-items: center;
   flex-shrink: 0;
+  justify-self: end;
 }
 
 .gauge-percentage {
@@ -67,16 +71,22 @@
 @media (max-width: 900px) {
   .category-card {
     width: 100%;
-    flex-direction: column;
+    grid-template-columns: 1fr;
     align-items: center;
-    gap: 20px;
+    text-align: center;
+    gap: 16px;
   }
 
   .category-card h2 {
     margin-bottom: 12px;
+    text-align: center;
   }
 
   .movie-list {
     width: 100%;
+  }
+
+  .gauge-container {
+    justify-self: center;
   }
 }
