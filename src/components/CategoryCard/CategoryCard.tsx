@@ -69,7 +69,8 @@ export default function CategoryCard({
         <Gauge
           value={percentage}
           max={100}
-          size={180}
+          width={180}
+          height={180}
           color={["#d32f2f", "#fbc02d", "#388e3c"]}
         />
       </div>
