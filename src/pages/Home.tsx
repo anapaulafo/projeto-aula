@@ -20,7 +20,6 @@ export const Home = () => {
   const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
 
-  // Busca filmes do backend
   const fetchMovies = async () => {
     try {
       const res = await fetch("http://localhost:4000/api/movies");
@@ -31,7 +30,6 @@ export const Home = () => {
     }
   };
 
-  // Busca filmes assistidos do usuário
   const fetchAssistidos = async () => {
     if (!userId) return;
 
@@ -39,14 +37,8 @@ export const Home = () => {
       const res = await fetch(`http://localhost:4000/api/user/${userId}`);
       const data = await res.json();
 
-      if (res.ok) {
-        // Garantir que todos os IDs sejam strings
-        const ids = (data.assistidos || []).map(String);
-        setAssistidos(ids);
-      } else {
-        setAssistidos([]);
-        console.error("Erro ao buscar assistidos:", data.error);
-      }
+      if (res.ok) setAssistidos((data.assistidos || []).map(String));
+      else setAssistidos([]);
     } catch (err) {
       console.error("Erro ao buscar assistidos:", err);
       setAssistidos([]);
@@ -102,7 +94,6 @@ export const Home = () => {
               poster={movie.poster_path}
               duration={movie.runtime}
               imgUrl={IMG_URL}
-              // Verifica como string para compatibilidade com o backend
               initialWatched={assistidos.includes(String(movie.id))}
               onToggle={(movieId, isWatched) => {
                 setAssistidos((prev) =>

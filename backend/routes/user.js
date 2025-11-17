@@ -6,11 +6,9 @@ dotenv.config();
 const { createClient } = pkg;
 
 const router = express.Router();
-
-
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
-// busca usuário por ID
+// Busca usuário por ID
 router.get("/:id", async (req, res) => {
   const userId = req.params.id;
 
@@ -27,14 +25,13 @@ router.get("/:id", async (req, res) => {
   res.json(data);
 });
 
-// toggle filme assistido
+// Toggle filme assistido
 router.post("/watched", async (req, res) => {
   const { userId, movieId } = req.body;
 
   if (!userId || !movieId) {
     return res.status(400).json({ error: "userId e movieId são obrigatórios." });
   }
-
 
   const { data: user, error: userError } = await supabase
     .from("oscars2025")
@@ -46,16 +43,16 @@ router.post("/watched", async (req, res) => {
     return res.status(404).json({ error: "Usuário não encontrado." });
   }
 
+  const movieIdStr = String(movieId);
   let assistidos = user.assistidos || [];
 
- 
-  if (assistidos.includes(movieId)) {
-    assistidos = assistidos.filter((id) => id !== movieId);
+  // Toggle real: marca ou desmarca
+  if (assistidos.includes(movieIdStr)) {
+    assistidos = assistidos.filter((id) => id !== movieIdStr);
   } else {
-    assistidos.push(movieId);
+    assistidos.push(movieIdStr);
   }
 
- 
   const { error: updateError } = await supabase
     .from("oscars2025")
     .update({ assistidos })

@@ -21,7 +21,7 @@ export default function MovieCard({
   onToggle,
 }: MovieCardProps) {
   const [watched, setWatched] = useState(initialWatched);
-  const [loading, setLoading] = useState(false); // evita cliques rápidos duplicados
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setWatched(initialWatched);
@@ -47,7 +47,7 @@ export default function MovieCard({
       const data = await res.json();
 
       if (res.ok) {
-        const watchedNow = data.assistidos.includes(id);
+        const watchedNow = data.assistidos.includes(String(id));
         setWatched(watchedNow);
         if (onToggle) onToggle(id, watchedNow);
       } else {
