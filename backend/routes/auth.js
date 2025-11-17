@@ -67,7 +67,14 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ error: "Usuário ou senha incorretos." });
     }
 
-    res.json({ message: "Login realizado com sucesso!", usuario: data.usuario });
+  res.json({
+  message: "Login realizado com sucesso!",
+  id: data.id,
+  usuario: data.usuario,
+  assistidos: data.assistidos || []
+});
+
+
 
   } catch (err) {
     console.error(err);

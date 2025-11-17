@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "../styles/Login.css";
 
 export const Login = () => {
@@ -15,24 +15,23 @@ export const Login = () => {
     setCarregando(true);
 
     try {
-      const resposta = await fetch("http://localhost:4000/auth/login", {
+      const resposta = await fetch("http://localhost:4000/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ usuario, senha }),
       });
 
       const data = await resposta.json();
-      console.log("Resposta do servidor:", data); // 👀 log para depuração
 
       if (resposta.ok) {
-        setMensagem("Login realizado com sucesso!");
-        localStorage.setItem("usuario", usuario); // sessão simples
+        localStorage.setItem("usuario", data.usuario);
+        localStorage.setItem("userId", data.id.toString());
+        localStorage.setItem("assistidos", JSON.stringify(data.assistidos || []));
+
         setUsuario("");
         setSenha("");
-
-        setTimeout(() => navigate("/"), 1000);
+        navigate("/home");
       } else {
-        // o backend retorna "error", não "message"
         setMensagem(data.error || data.message || "Usuário ou senha incorretos.");
       }
     } catch (erro) {
@@ -65,7 +64,12 @@ export const Login = () => {
           {carregando ? "Entrando..." : "Entrar"}
         </button>
       </form>
+
       {mensagem && <p className="mensagem">{mensagem}</p>}
+
+      <p style={{ marginTop: "20px", textAlign: "center" }}>
+        Não tem conta? <Link to="/register">Criar cadastro</Link>
+      </p>
     </div>
   );
 };
