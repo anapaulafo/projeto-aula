@@ -36,7 +36,6 @@ export const Home = () => {
     try {
       const res = await fetch(`http://localhost:4000/api/user/${userId}`);
       const data = await res.json();
-
       if (res.ok) setAssistidos((data.assistidos || []).map(String));
       else setAssistidos([]);
     } catch (err) {
@@ -62,23 +61,47 @@ export const Home = () => {
   }, [navigate, userId]);
 
   return (
-    <div className="home-container">
-      <button
-        onClick={handleLogout}
+    <div>
+      {/* Botões alinhados à direita */}
+      <div
         style={{
-          float: "right",
-          background: "#c0392b",
-          color: "white",
-          border: "none",
-          padding: "8px 16px",
-          borderRadius: "6px",
-          cursor: "pointer",
-          fontWeight: "bold",
+          display: "flex",
+          justifyContent: "flex-end", // alinhamento à direita
+          alignItems: "center",
           marginBottom: "20px",
+          gap: "12px", // espaço entre os botões
         }}
       >
-        Logout
-      </button>
+        <button
+          onClick={() => navigate("/dashboard")}
+          style={{
+            background: "#7a56c3",
+            color: "white",
+            border: "none",
+            padding: "8px 16px",
+            borderRadius: "6px",
+            cursor: "pointer",
+            fontWeight: "bold",
+          }}
+        >
+          Dashboard
+        </button>
+
+        <button
+          onClick={handleLogout}
+          style={{
+            background: "#c0392b",
+            color: "white",
+            border: "none",
+            padding: "8px 16px",
+            borderRadius: "6px",
+            cursor: "pointer",
+            fontWeight: "bold",
+          }}
+        >
+          Logout
+        </button>
+      </div>
 
       <h1>🎥 Meus Filmes</h1>
 
