@@ -17,6 +17,7 @@ export const Home = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [assistidos, setAssistidos] = useState<string[]>([]);
   const [loadingAssistidos, setLoadingAssistidos] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
 
@@ -61,7 +62,7 @@ export const Home = () => {
   }, [navigate, userId]);
 
   return (
-    <div>
+    <div className="home-container">
       {/* Botões alinhados à direita */}
       <div
         style={{
@@ -104,12 +105,24 @@ export const Home = () => {
       </div>
 
       <h1>🎥 Meus Filmes</h1>
+      <div className="home-search">
+        <input
+          type="text"
+          placeholder="Buscar filme..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
 
       {loadingAssistidos ? (
         <p>Carregando...</p>
       ) : (
         <div className="movies-grid">
-          {movies.map((movie) => (
+          {movies
+            .filter((m) =>
+              m.title.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+            .map((movie) => (
             <MovieCard
               key={movie.id}
               id={movie.id}
@@ -126,7 +139,7 @@ export const Home = () => {
                 );
               }}
             />
-          ))}
+            ))}
         </div>
       )}
     </div>

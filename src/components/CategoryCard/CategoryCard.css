@@ -82,6 +82,11 @@
     text-align: center;
   }
 
+  .filters {
+    width: 100%;
+    align-items: center;
+  }
+
   .movie-list {
     width: 100%;
   }

@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import "./Header.css";
 
 export const Header = () => {
@@ -8,4 +7,3 @@ export const Header = () => {
     </header>
   );
 };
-

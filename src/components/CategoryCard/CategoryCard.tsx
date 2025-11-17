@@ -57,13 +57,15 @@ export default function CategoryCard({
 
   return (
     <div className="category-card">
-      <h2>{categoryName}</h2> {}
+      <h2>{categoryName}</h2>
       <ul className="movie-list">
-        {movies.map((movie) => (
-          <li key={movie.id}>
-            {movie.title} {watchedIds.includes(movie.id) && "✔"}
-          </li>
-        ))}
+        {loading && <li>Carregando...</li>}
+        {!loading &&
+          movies.map((movie) => (
+            <li key={movie.id}>
+              {movie.title} {watchedIds.includes(movie.id) && "✔"}
+            </li>
+          ))}
       </ul>
       <div className="gauge-container">
         <Gauge
@@ -71,7 +73,7 @@ export default function CategoryCard({
           max={100}
           width={180}
           height={180}
-          color={["#d32f2f", "#fbc02d", "#388e3c"]}
+          color="#7a56c3"
         />
       </div>
     </div>
