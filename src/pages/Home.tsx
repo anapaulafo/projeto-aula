@@ -63,14 +63,14 @@ export const Home = () => {
 
   return (
     <div className="home-container">
-      {/* Botões alinhados à direita */}
+      {/* Botões de navegação */}
       <div
         style={{
           display: "flex",
-          justifyContent: "flex-end", // alinhamento à direita
+          justifyContent: "flex-end",
           alignItems: "center",
           marginBottom: "20px",
-          gap: "12px", // espaço entre os botões
+          gap: "12px", 
         }}
       >
         <button
